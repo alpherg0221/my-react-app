@@ -1,9 +1,11 @@
+# .github/workflows/deploy.yml
+
 name: Deploy to GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches:
-      - main  # pullリクエストがmainブランチにマージされた時にトリガーされます
+      - main
 
 jobs:
   deploy:
@@ -21,15 +23,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set Git user for deployment
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Build the app
-        run: npm run build  # ビルドスクリプト（package.jsonで定義されていること）
+        run: npm run build
 
       - name: Deploy to GitHub Pages
-        run: npm run deploy  # デプロイスクリプト（package.jsonで定義されていること）
+        run: npm run deploy
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
