@@ -1,9 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - main  # pullリクエストがmainブランチにマージされた時にトリガーされます
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,14 +26,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Configure GitHub remote URL with GH_TOKEN
-        run: |
-          git remote set-url origin https://github-actions:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
-
       - name: Build the app
-        run: npm run build
+        run: npm run build  # ビルドスクリプト（package.jsonで定義されていること）
 
       - name: Deploy to GitHub Pages
-        run: npm run deploy
+        run: npm run deploy  # デプロイスクリプト（package.jsonで定義されていること）
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
