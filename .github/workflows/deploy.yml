@@ -2,8 +2,8 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: ['main']
-
+    branches:
+      - 'main'
   workflow_dispatch:
 
 permissions:
@@ -22,24 +22,29 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup Pages
+        
+      - name: Set up Pages
         uses: actions/configure-pages@v3
-      - name: Setup Node
+        
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '18'
+
       - name: Install dependencies
         run: npm install
-      - name: Build
+
+      - name: Build the project
         run: npm ci && npm run build
         env:
-          PUBLIC_URL: /my-react-app
-      - name: Upload artifact
+          PUBLIC_URL: /my-react-app  # 必要に応じて変更
+
+      - name: Upload build artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './build'
+          path: './build'  # 出力されるディレクトリのパス
 
   deploy:
     environment:
