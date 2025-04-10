@@ -41,7 +41,7 @@ jobs:
           PUBLIC_URL: /my-react-app  # 必要に応じて変更
 
       - name: Upload build artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: './build'  # 出力されるディレクトリのパス
 
