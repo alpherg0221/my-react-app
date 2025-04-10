@@ -30,6 +30,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages -d build -r https://$GH_TOKEN@github.com/r1gel0629/my-react-app.git
+          git remote set-url origin https://$GH_TOKEN@github.com/r1gel0629/my-react-app.git
+          npx gh-pages -d build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
